@@ -15,7 +15,7 @@ namespace IntexII_Project_4_2.Controllers
 
         public IActionResult Index(int pageNum)
         {
-            int pageSize = 5;
+            int pageSize = 2;
 
             var ProductList = new ProductListViewModel
             {
