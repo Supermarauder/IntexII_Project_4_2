@@ -1,4 +1,5 @@
 using IntexII_Project_4_2.Models;
+using IntexII_Project_4_2.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,33 @@ namespace IntexII_Project_4_2.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private IIntexProjectRepository _repo;
+        public HomeController(IIntexProjectRepository temp) 
         {
-            _logger = logger;
+            _repo = temp;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNum)
         {
-            return View();
+            int pageSize = 5;
+
+            var ProductList = new ProductListViewModel
+            {
+                Products = _repo.Products
+                .OrderBy(x => x.Name)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize),
+
+                PaginationInfo = new PaginationInfo
+                {
+                    CurrentPage = pageNum,
+                    ItemsPerPage = pageSize,
+                    TotalItems = _repo.Products.Count()
+                }
+
+            };
+
+            return View(ProductList);
         }
 
         public IActionResult Privacy()
@@ -23,10 +41,5 @@ namespace IntexII_Project_4_2.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

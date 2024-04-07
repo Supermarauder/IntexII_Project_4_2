@@ -1,4 +1,5 @@
 using IntexII_Project_4_2.Data;
+using IntexII_Project_4_2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,17 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+//SQLITE DATABASE, eventually swap this to azure
+builder.Services.AddDbContext<IntexProjectDbContext>(options =>
+{
+    options.UseSqlite(builder.Configuration["ConnectionStrings:DataConnection"]);
+}
+
+);
+
+builder.Services.AddScoped<IIntexProjectRepository, EFIntexProjectRepository>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
