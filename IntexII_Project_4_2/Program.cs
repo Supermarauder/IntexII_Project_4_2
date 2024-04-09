@@ -49,9 +49,14 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute("pagination", "{pageNum}", new { Controller = "Home", action = "ViewProducts", pageNum = 1 });
+app.MapDefaultControllerRoute();
+
 app.MapRazorPages();
 
 app.Run();
