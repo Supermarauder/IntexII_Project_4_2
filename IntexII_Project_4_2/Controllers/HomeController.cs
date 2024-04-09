@@ -36,46 +36,6 @@ namespace IntexII_Project_4_2.Controllers
             return View(ProductList);
         }
 
-        public IActionResult AddProduct()
-        {
-            return View();
-        }
-        public IActionResult AllOrders()
-        {
-            return View();
-        }
-        public IActionResult AllProducts()
-        {
-            return View();
-        }
-        public IActionResult Delete()
-        {
-            return View();
-        }
-        public IActionResult AdminIndex()
-        {
-            return View();
-        }
-        public IActionResult UpdateProduct()
-        {
-            return View();
-        }
-        public IActionResult Checkout()
-        {
-            return View();
-        }
-        public IActionResult Confirmation0()
-        {
-            return View();
-        }
-        public IActionResult Confirmation1()
-        {
-            return View();
-        }
-        public IActionResult RegistrationSuccessful()
-        {
-            return View();
-        }
         public IActionResult About()
         {
             return View();
