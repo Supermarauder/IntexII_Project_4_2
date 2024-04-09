@@ -13,32 +13,10 @@ namespace IntexII_Project_4_2.Controllers
             _repo = temp;
         }
 
-        public IActionResult Index(int pageNum)
+        public IActionResult Index()
         {
-            int pageSize = 2;
 
-            // Ensure pageNum is at least 1
-            pageNum = Math.Max(1, pageNum);
-
-            // Calculate the number of products to skip
-            int skipAmount = (pageNum - 1) * pageSize;
-
-            var ProductList = new ProductListViewModel
-            {
-                Products = _repo.Products
-                    .OrderBy(x => x.Name)
-                    .Skip(skipAmount)  // Use the safely calculated skip amount
-                    .Take(pageSize),
-
-                PaginationInfo = new PaginationInfo
-                {
-                    CurrentPage = pageNum,
-                    ItemsPerPage = pageSize,
-                    TotalItems = _repo.Products.Count()
-                }
-            };
-
-            return View(ProductList);
+            return View();
         }
 
 
@@ -66,9 +44,32 @@ namespace IntexII_Project_4_2.Controllers
         {
             return View();
         }
-        public IActionResult ViewProducts()
+        public IActionResult ViewProducts(int pageNum)
         {
-            return View();
+            int pageSize = 5;
+
+            // Ensure pageNum is at least 1
+            pageNum = Math.Max(1, pageNum);
+
+            // Calculate the number of products to skip
+            int skipAmount = (pageNum - 1) * pageSize;
+
+            var ProductList = new ProductListViewModel
+            {
+                Products = _repo.Products
+                    .OrderBy(x => x.Name)
+                    .Skip(skipAmount)  // Use the safely calculated skip amount
+                    .Take(pageSize),
+
+                PaginationInfo = new PaginationInfo
+                {
+                    CurrentPage = pageNum,
+                    ItemsPerPage = pageSize,
+                    TotalItems = _repo.Products.Count()
+                }
+            };
+
+            return View(ProductList);
         }
 
 
