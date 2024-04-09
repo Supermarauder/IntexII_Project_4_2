@@ -17,12 +17,18 @@ namespace IntexII_Project_4_2.Controllers
         {
             int pageSize = 2;
 
+            // Ensure pageNum is at least 1
+            pageNum = Math.Max(1, pageNum);
+
+            // Calculate the number of products to skip
+            int skipAmount = (pageNum - 1) * pageSize;
+
             var ProductList = new ProductListViewModel
             {
                 Products = _repo.Products
-                .OrderBy(x => x.Name)
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize),
+                    .OrderBy(x => x.Name)
+                    .Skip(skipAmount)  // Use the safely calculated skip amount
+                    .Take(pageSize),
 
                 PaginationInfo = new PaginationInfo
                 {
@@ -30,11 +36,11 @@ namespace IntexII_Project_4_2.Controllers
                     ItemsPerPage = pageSize,
                     TotalItems = _repo.Products.Count()
                 }
-
             };
 
             return View(ProductList);
         }
+
 
         public IActionResult About()
         {
