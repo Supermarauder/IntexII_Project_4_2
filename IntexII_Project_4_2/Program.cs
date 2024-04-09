@@ -18,7 +18,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 //SQLITE DATABASE, eventually swap this to azure
 builder.Services.AddDbContext<IntexProjectDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:DataConnection"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:DataConnection"]);
 }
 
 );

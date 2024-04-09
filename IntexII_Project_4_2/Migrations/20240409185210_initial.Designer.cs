@@ -3,6 +3,7 @@ using System;
 using IntexII_Project_4_2.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -11,48 +12,52 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntexII_Project_4_2.Migrations
 {
     [DbContext(typeof(IntexProjectDbContext))]
-    [Migration("20240409165051_FixingBools")]
-    partial class FixingBools
+    [Migration("20240409185210_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("IntexII_Project_4_2.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("customer_ID");
 
                     b.Property<double>("Age")
-                        .HasColumnType("REAL")
+                        .HasColumnType("float")
                         .HasColumnName("age");
 
                     b.Property<string>("BirthDate")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("birth_date");
 
                     b.Property<string>("CountryOfResidence")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("country_of_residence");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("first_name");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("gender");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("last_name");
 
                     b.HasKey("CustomerId");
@@ -63,19 +68,19 @@ namespace IntexII_Project_4_2.Migrations
             modelBuilder.Entity("IntexII_Project_4_2.Models.LineItem", b =>
                 {
                     b.Property<int>("TransactionId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("transaction_ID");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("product_ID");
 
                     b.Property<int>("Qty")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("qty");
 
                     b.Property<int?>("Rating")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("rating");
 
                     b.HasKey("TransactionId", "ProductId");
@@ -86,66 +91,66 @@ namespace IntexII_Project_4_2.Migrations
             modelBuilder.Entity("IntexII_Project_4_2.Models.Order", b =>
                 {
                     b.Property<int>("TransactionId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("transaction_ID");
 
                     b.Property<int>("Amount")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("amount");
 
                     b.Property<string>("Bank")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("bank");
 
                     b.Property<string>("CountryOfTransaction")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("country_of_transaction");
 
                     b.Property<int?>("CustomerId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("customer_ID");
 
                     b.Property<string>("Date")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("date");
 
                     b.Property<string>("DayOfWeek")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("day_of_week");
 
                     b.Property<string>("EntryMode")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("entry_mode");
 
                     b.Property<int>("Fraud")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("fraud");
 
                     b.Property<bool>("Fullfilled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("shipping_address");
 
                     b.Property<int>("Time")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("time");
 
                     b.Property<string>("TypeOfCard")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("type_of_card");
 
                     b.Property<string>("TypeOfTransaction")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("type_of_transaction");
 
                     b.HasKey("TransactionId");
@@ -156,50 +161,50 @@ namespace IntexII_Project_4_2.Migrations
             modelBuilder.Entity("IntexII_Project_4_2.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("product_ID");
 
                     b.Property<string>("Category")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("category");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<string>("ImgLink")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("img_link");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
                     b.Property<int?>("NumParts")
                         .IsRequired()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("num_parts");
 
                     b.Property<int?>("Price")
                         .IsRequired()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("price");
 
                     b.Property<string>("PrimaryColor")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("primary_color");
 
                     b.Property<string>("SecondaryColor")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("secondary_color");
 
                     b.Property<int?>("Year")
                         .IsRequired()
                         .HasMaxLength(4)
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("year");
 
                     b.HasKey("ProductId");
