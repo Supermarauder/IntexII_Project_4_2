@@ -44,32 +44,38 @@ namespace IntexII_Project_4_2.Controllers
         {
             return View();
         }
-        public IActionResult ViewProducts(int pageNum)
+        public IActionResult ViewProducts(int pageNum, string[] categories)
         {
-            int pageSize = 5;
-
-            // Ensure pageNum is at least 1
+            int pageSize = 50;
             pageNum = Math.Max(1, pageNum);
 
-            // Calculate the number of products to skip
-            int skipAmount = (pageNum - 1) * pageSize;
+            IQueryable<Product> query = _repo.Products.AsQueryable();
 
-            var ProductList = new ProductListViewModel
+            if (categories != null && categories.Length > 0)
             {
-                Products = _repo.Products
-                    .OrderBy(x => x.Name)
-                    .Skip(skipAmount)  // Use the safely calculated skip amount
-                    .Take(pageSize),
+                query = query.Where(p => categories.Any(cat => p.Category.Contains(cat)));
+            }
 
+            int totalItems = query.Count();
+
+            List<Product> filteredProducts = query
+                .OrderBy(p => p.Name)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var productList = new ProductListViewModel
+            {
+                Products = filteredProducts,
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = _repo.Products.Count()
+                    TotalItems = totalItems
                 }
             };
 
-            return View(ProductList);
+            return View(productList);
         }
 
 

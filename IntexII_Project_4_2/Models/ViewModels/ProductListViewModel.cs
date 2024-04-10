@@ -2,9 +2,8 @@
 {
     public class ProductListViewModel
     {
-        public IQueryable<Product> Products { get; set; }
+        public IEnumerable<Product> Products { get; set; }  // Or use List<Product> if you prefer
 
         public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo();
-
     }
 }
