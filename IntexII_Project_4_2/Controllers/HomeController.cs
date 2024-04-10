@@ -44,16 +44,23 @@ namespace IntexII_Project_4_2.Controllers
         {
             return View();
         }
-        public IActionResult ViewProducts(int pageNum, string[] categories)
+        public IActionResult ViewProducts(int pageNum, string[] categories, string[] colors)
         {
             int pageSize = 50;
             pageNum = Math.Max(1, pageNum);
 
             IQueryable<Product> query = _repo.Products.AsQueryable();
 
+            // Apply category filters if provided
             if (categories != null && categories.Length > 0)
             {
                 query = query.Where(p => categories.Any(cat => p.Category.Contains(cat)));
+            }
+
+            // Apply color filters if provided
+            if (colors != null && colors.Length > 0)
+            {
+                query = query.Where(p => colors.Contains(p.PrimaryColor));
             }
 
             int totalItems = query.Count();
